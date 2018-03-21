@@ -1,0 +1,25 @@
+body
+{
+    background: url('img/logoABI.png');
+    font-family: Arial, serif;
+    font-family: "harrington";
+    color: darkblue;
+
+}
+@font-face {
+    font-family: "harrington";
+    src: url("HARNGTON.ttf");
+}
+#bloc_page
+{
+    width: 100%;
+    margin: auto;
+
+}
+
+.map {
+    width: 50%;
+    position: right;
+   height: 50%;
+   margin-right: 20em auto;
+}
