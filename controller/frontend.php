@@ -1,2 +1,5 @@
-<?php 
-echo 'bonjour';
+<?php
+function homeController()
+{
+    echo "coucou";
+}
