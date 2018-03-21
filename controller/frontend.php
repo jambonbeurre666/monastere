@@ -1,5 +1,5 @@
 <?php
 function homeController()
 {
-    echo "coucou";
+    require('view/homeView.php');
 }
