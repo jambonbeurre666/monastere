@@ -20,6 +20,8 @@ class Connection
             array(\PDO::ATTR_PERSISTENT => true)
             );
 
+            $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
             $req = "SET NAMES UTF8";
             $result = $this->db->prepare($req);
             $result->execute();
@@ -32,6 +34,7 @@ class Connection
     {
         if (!self::$instance instanceof self) {
             self::$instance = new self;
+       
         }
         return self::$instance;
     }
