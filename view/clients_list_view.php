@@ -15,7 +15,6 @@
         </tr>
     </thead>
     <tbody>
-
         <?php foreach ($results as $result) {
     echo '<tr>';
     echo '<td>'. $result['RaisonSociale'] .'</td>';
