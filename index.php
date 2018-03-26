@@ -9,6 +9,8 @@ try {
             verifyUser();
         } elseif ($_GET['action'] === "disconnect") {
             disconnect();
+        } elseif ($_GET['action'] === "customers-list") {
+            listClient();
         } else {
             throw new Exception("{$_GET['action']} n'existe pas !");
             //header("location: index.php");
