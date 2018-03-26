@@ -64,5 +64,9 @@ function disconnect()
 
 function listClient()
 {
+    require_once('dao/ClientManager.php');
+    $clientManager = new ClientManager();
+    $results = $clientManager->getAllCustomers();
+
     require('view/clients_list_view.php');
 }
