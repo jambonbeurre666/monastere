@@ -3,13 +3,9 @@
     $scripts_footer = array("public/js/ajax_home.js");
 
     ob_start();
-    require('modules/loggin_module.php');
+    
 ?>
-<h1>Logged = <?= isset($_SESSION['logged']) ? "true" : "false"; ?></h1>
-   <div id="bloc_page">
-        <header>
-            <img src="../public/images/logoABI.png" alt="Logo_page" title="Accueil" id="logo" />
-        </header>
+   <div id="bloc_page">  
     </div>
     <div>
 
