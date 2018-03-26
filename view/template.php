@@ -9,6 +9,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-    <?= $content; ?>
+    <?php
+        echo $content;
+        if (isset($scripts_footer) && $scripts_footer !== "") {
+            ?>
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                <?php
+                    foreach ($scripts_footer as $script) {
+                        echo '$.getScript("'.$script.'")';
+                    } ?>
+            });
+        </script>
+    <?php
+        } ?>
 </body>
 </html>
