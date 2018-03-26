@@ -12,7 +12,7 @@
 </head>
 <body>
     <?php
-        require_once('modules/header_view.php');
+        require_once('modules/header_module.php');
 
         echo $content;
         if (isset($scripts_footer) && $scripts_footer !== "") {
