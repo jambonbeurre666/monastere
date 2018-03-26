@@ -23,23 +23,46 @@ function verifyUser()
 {
     require_once('dao/LogginManager.php');
     $logginManager = new LogginManager();
-    $user = $logginManager->getUser($_POST['mail']);
+   
     if (isset($_POST['mail']) && isset($_POST['pass'])) {
-        if ($_POST['mail'] === $user['mail'] && password_verify($_POST['pass'], $user['motdepasse']) === true) {
-            $_SESSION['logged'] = true;
-            $_SESSION['nom'] = $user['nom'];
-            $_SESSION['prenom'] = $user['prenom'];
-            header('location:index.php');
+        if (!empty($_POST['mail']) && !empty($_POST['pass'])) {
+            $user = $logginManager->getUser($_POST['mail']);
+
+            if ($_POST['mail'] === $user['mail'] && password_verify($_POST['pass'], $user['motdepasse']) === true) {
+                $_SESSION['logged'] = true;
+                $_SESSION['nom'] = $user['nom'];
+                $_SESSION['prenom'] = $user['prenom'];
+    
+                $arr = array('message' => 'Success !');
+                returnReponse('200 OK', $arr);
+            } else {
+                $arr = array('message' => 'La combinaison email/mot de passe est incorrect'); //etc
+                returnReponse('401 Unauthorized', $arr);
+            }
         } else {
-            throw new Exception("La combinaison email/mot de passe est incorrect");
+            $arr = array('message' => 'Merci de renseigner tous les champs'); //etc
+            returnReponse('401 Unauthorized', $arr);
         }
     } else {
-        throw new Exception("Merci de renseigner tous les champs");
+        $arr = array('message' => 'Merci de renseigner tous les champs'); //etc
+        returnReponse('401 Unauthorized', $arr);
+        //throw new Exception("Merci de renseigner tous les champs");
     }
+}
+
+function returnReponse($httpError, $array)
+{
+    header('HTTP/1.1 ' . $httpError);
+    echo json_encode($array);
 }
 
 function disconnect()
 {
     session_destroy();
     header('location:index.php');
+}
+
+function listClient()
+{
+    require('view/clients_list_view.php');
 }
