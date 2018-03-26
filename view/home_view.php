@@ -1,5 +1,7 @@
 <?php
     $title = "Bienvenue sur le site Abi";
+    $scripts_footer = array("public/js/ajax_home.js");
+
     ob_start();
     require('modules/loggin_module.php');
 ?>
