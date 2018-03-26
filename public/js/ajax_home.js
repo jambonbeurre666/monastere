@@ -1,21 +1,22 @@
 console.log('script home_view.js chargé');
 
-/*$(".btn-loggin").click(function(e){
-
-    e.preventDefault();
-     
+$(".btn-loggin").click(function(e){
+    e.preventDefault();     
     $.ajax({
-       url : 'more_com.php',
-       type : 'GET',
-       dataType : 'html',
-       success : function(code_html, statut){ // success est toujours en place, bien sûr !
-           
+       url : 'index.php?action=loggin',
+       type : 'POST',
+       dataType : 'json',
+       data : {
+        mail : $("input[name='mail']").val(),
+        pass : $("input[name='pass']").val(),
+       },
+       success : function(code_html, statut){ 
+        window.location.replace("index.php?action=customers-list");
        },
 
-       error : function(resultat, statut, erreur){
-
+       error : function(xhr, statut, erreur){
+            let resp = JSON.parse(xhr.responseText);
+            console.log(erreur + ' ' + xhr.status + ' : ' + resp.message);
        }
-
     });
-   
-});*/
+});
