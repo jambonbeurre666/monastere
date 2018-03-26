@@ -1,15 +1,8 @@
 body
 {
-    background: url('img/logoABI.png');
-    font-family: Arial, serif;
-    font-family: "harrington";
-    color: darkblue;
+    background-image: url(../images/bck.jpg);
+}
 
-}
-@font-face {
-    font-family: "harrington";
-    src: url("HARNGTON.ttf");
-}
 #bloc_page
 {
     width: 100%;
@@ -19,7 +12,64 @@ body
 
 .map {
     width: 50%;
-    position: right;
-   height: 50%;
-   margin-right: 20em auto;
+    float: right;
+    height: 50%;
+    margin-right: 20em auto;
+    margin-top: 30px;
 }
+
+.align {
+    padding: 15em;
+    float: left;
+    margin-right: 1em auto;
+}
+
+.btn-hover {
+    opacity : 0;
+}
+
+.table-hover tbody tr:hover .btn-hover {
+    opacity : 1;
+}
+
+.list-clients tr td:nth-child(1){
+    width:35%;
+}
+
+.list-clients tr td:nth-child(2){
+    width:20%;
+}
+
+.list-clients tr td:nth-child(3){
+    width:20%;
+}
+
+.list-clients tr td:nth-child(4){
+    width:15%;
+}
+
+.pre-header {
+    padding: 2em 0;
+    background-color: #fff; 
+}
+
+.nav-bar {
+
+}
+
+.logo-main  {
+    width: 100px;
+}
+
+.login {
+
+    float: right
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:active {
+    background: none!important;
+    color:#007bff!important;
+    cursor: default!important;
+}
+    
+
