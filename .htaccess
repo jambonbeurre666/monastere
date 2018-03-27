@@ -2,4 +2,17 @@ RewriteEngine On
 RewriteRule liste-clients.html /index.php?action=customers-list
 RewriteRule deconnexion.html /index.php?action=disconnect
 RewriteRule connexion.html /index.php?action=loggin
-RewriteRule connexion.html /index.php?action=loggin
+RewriteRule afficher-client-([0-9]+).html /index.php?action=view-customer&id=$1
+
+ErrorDocument 400 /index.php?action=error&ernum=400
+ErrorDocument 401 /index.php?action=error&ernum=401
+ErrorDocument 402 /index.php?action=error&ernum=402
+ErrorDocument 403 /index.php?action=error&ernum=403
+ErrorDocument 404 /index.php?action=error&ernum=404
+ErrorDocument 405 /index.php?action=error&ernum=405
+ErrorDocument 500 /index.php?action=error&ernum=500
+ErrorDocument 501 /index.php?action=error&ernum=501
+ErrorDocument 502 /index.php?action=error&ernum=502
+ErrorDocument 503 /index.php?action=error&ernum=503
+ErrorDocument 504 /index.php?action=error&ernum=504
+ErrorDocument 505 /index.php?action=error&ernum=505
