@@ -8,10 +8,10 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item <?= ($selected === "home") ? 'active' : ''; ?>">
         <a class="nav-link" href="/">Accueil</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item <?= ($selected === "list") ? 'active' : ''; ?>">
         <a class="nav-link" href="liste-clients.html">Liste des clients</a>
       </li>
     <!--  <li class="nav-item dropdown">
