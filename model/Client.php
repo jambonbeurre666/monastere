@@ -197,6 +197,7 @@ class Client
             $this->adressemail = $adressemail;
         } else {
             throw new Exception("Veuillez saisir une adresse mail valide");
+            
         }
     }
 }
