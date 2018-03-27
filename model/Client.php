@@ -17,14 +17,21 @@ class Client
     private $effectif;
     private $commentaire;
 
-
-    public function __construct($tel, $post, $email)
+    /**Constructeur */
+    public function __construct($array)
     {
-        $this->setTelephone($tel);
-        $this->setCodePostal($post);
-        $this->setAdressemail($email);
+        $this-> setIdClient($array['Id_Client']);
+        $this->setRaisonSociale($array['raison_Client']);
+        $this->setNature($array['nature_Client']);
+        $this->setType($array['type_Client']);
+        $this->setAdressemail($array['email_Client']);
+        $this->setVille($array['ville_Client']);
+        $this->setCodePostal($array['code_postal_Client']);
+        $this->setTelephone($array['telephone_Client']);
+        $this->setCa($array['ca_Client']);
+        $this->setEffectif($array['effectif_Client']);
+        $this->setCommentaire($array['commentaire_Client']);
     }
-
 
     //VERIFICATION TELEPHONE
     /* numeric, decimal passes */
@@ -33,7 +40,7 @@ class Client
         return is_numeric($telephone);
     }
 
-    /* digits only, no dots */
+    /* digits only */
     private function is_digits($telephone)
     {
         return !preg_match("/[^0-9]/", $telephone);
@@ -43,13 +50,8 @@ class Client
     {
         return strlen($digit);
     }
-    
-  
-   
-      
-    //---------------------------
 
-
+    /**Accesseurs */
     public function getIdClient()
     {
         return $this->idClient;
@@ -74,7 +76,7 @@ class Client
     {
         return $this->nature;
     }
-
+    
     public function setNature($nature)
     {
         $this->nature = $nature;
@@ -115,23 +117,20 @@ class Client
         return $this->codePostal;
     }
 
+    /**Verification Code Postal */
     public function setCodePostal($codePostal)
     {
         $this->codePostal = $codePostal;
-        
         $check = "/^([0-9]{5})$/";
 
-        if(preg_match($check,$codePostal)===1){
+        if (preg_match($check, $codePostal)===1) {
             $this->codePostal = $codePostal;
+        } else {
+            throw new Exception("Veuillez saisir un code postal correct");
         }
-        else{
-          throw new Exception("Veuillez saisir un code postal correct");
-        }
-      
-
-
     }
-
+    
+    /**Verification de la taille, des caractères et détermine si la variable est un type numérique */
     public function getTelephone()
     {
         return $this->telephone;
@@ -141,9 +140,7 @@ class Client
     {
         if ($this->validate_numeric($telephone)&& $this->lengthDigit($telephone)===10 && $this->is_digits($telephone)) {
             $this->telephone = wordwrap($telephone, 2, " ", true);
-           
-        } 
-        else {
+        } else {
             throw new Exception("Veuillez saisir un numéro valide");
         }
     }
@@ -155,7 +152,11 @@ class Client
 
     public function setCa($ca)
     {
-        $this->ca = $ca;
+        if (!is_numeric($ca)) {
+            throw new Exception(" Le chiffre d'affaire ne peut être que des chiffres ");
+        } else {
+            $this->ca = $ca;
+        }
     }
 
     public function getEffectif()
@@ -165,7 +166,13 @@ class Client
 
     public function setEffectif($effectif)
     {
-        $this->effectif = $effectif;
+        if ($effectif<=0) {
+            throw new Exception("L'effectif ne peut pas être égal à 0 ");
+        } elseif (!is_numeric($effectif)) {
+            throw new Exception("L'effectif n'est pas un nombre entier");
+        } else {
+            $this->effectif = $effectif;
+        }
     }
 
     public function getCommentaire()
@@ -177,20 +184,19 @@ class Client
     {
         $this->commentaire = $commentaire;
     }
-    public function getAdressemail(){
-		return $this->adressemail;
-	}
 
-	public function setAdressemail($adressemail){
-      
+    public function getAdressemail()
+    {
+        return $this->adressemail;
+    }
+    
+    /**Vérification de l'adresse mail avec méthode filter_var */
+    public function setAdressemail($adressemail)
+    {
         if (filter_var($adressemail, FILTER_VALIDATE_EMAIL)) {
-           
-        $this->adressemail = $adressemail;
-        }
-        else
-        {
+            $this->adressemail = $adressemail;
+        } else {
             throw new Exception("Veuillez saisir une adresse mail valide");
         }
-
-	}
+    }
 }
