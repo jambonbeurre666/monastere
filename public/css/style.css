@@ -1,4 +1,4 @@
-body
+.bg-body
 {
     background-image: url(../images/bck.jpg);
 }
@@ -11,12 +11,19 @@ body
 }
 
 .map {
-    width: 50%;
-    float: right;
-    height: 50%;
-    margin-right: 20em auto;
-    margin-top: 30px;
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
 }
+
+.map iframe {
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+    }
 
 .align {
     padding: 15em;
@@ -26,10 +33,12 @@ body
 
 .btn-hover {
     opacity : 0;
+    transition: opacity .5s ease;
 }
 
-.table-hover tbody tr:hover .btn-hover {
+.table tbody tr:hover .btn-hover {
     opacity : 1;
+    transition: opacity .2s ease;
 }
 
 .list-clients tr td:nth-child(1){
@@ -70,6 +79,10 @@ body
     background: none!important;
     color:#007bff!important;
     cursor: default!important;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
 }
     
 
