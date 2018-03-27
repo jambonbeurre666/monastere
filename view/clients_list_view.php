@@ -5,7 +5,7 @@
 <div class="container">
 
 <div class="table-responsive">
-    <table class="table table-hover list-clients">
+    <table class="table table-striped list-clients">
     <thead class="thead-dark">
         <tr>
         <th scope="col">Raison Sociale</th>
@@ -23,6 +23,7 @@
     echo '<td>';
     echo '<div class="btn-hover">';
     echo '<a href="index.php?action=view-customer&id='.$result['idClient'].'" class="btn btn-outline-success"><i class="fas fa-eye"></i></a> ';
+    echo '<a href="index.php?action=update-customer&id='.$result['idClient'].'" class="btn btn-outline-warning"><i class="fas fa-pencil-alt"></i></a> ';
     echo '<a href="index.php?action=delete-customer&id='.$result['idClient'].'" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>';
     echo '</div>';
     echo '</td>';
