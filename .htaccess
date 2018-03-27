@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteRule liste-clients.html /index.php?action=customers-list
+RewriteRule deconnexion.html /index.php?action=disconnect
+RewriteRule connexion.html /index.php?action=loggin
+RewriteRule connexion.html /index.php?action=loggin
