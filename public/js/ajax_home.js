@@ -11,7 +11,7 @@ $(".btn-loggin").click(function(e){
         pass : $("input[name='pass']").val(),
        },
        success : function(code_html, statut){ 
-        window.location.replace("index.php?action=customers-list");
+        window.location.replace("liste-clients.html");
        },
 
        error : function(xhr, statut, erreur){
