@@ -15,8 +15,11 @@
         require_once('modules/header_module.php');
 
         echo $content;
+
+        require_once('modules/footer_module.php');
         if (isset($scripts_footer) && $scripts_footer !== "") {
             ?>
+        
         <script type="text/javascript">
             $( document ).ready(function() {
                 <?php
@@ -26,7 +29,7 @@
             });
         </script>
     <?php
-        } ?>
+        } ?>  
 </body>
 </html>
 
