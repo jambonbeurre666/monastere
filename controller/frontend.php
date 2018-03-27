@@ -59,7 +59,7 @@ function returnReponse($httpError, $array)
 function disconnect()
 {
     session_destroy();
-    header('location:index.php');
+    header('location:/');
 }
 
 function listClient()
