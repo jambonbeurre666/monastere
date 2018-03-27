@@ -2,7 +2,8 @@ RewriteEngine On
 RewriteRule liste-clients.html /index.php?action=customers-list
 RewriteRule deconnexion.html /index.php?action=disconnect
 RewriteRule connexion.html /index.php?action=loggin
-RewriteRule afficher-client-([0-9]+).html /index.php?action=view-customer&id=$1
+## RewriteRule afficher-client-([0-9]+).html /index.php?action=view-customer&id=$1
+RewriteRule ^fiche-client-([a-zA-Z0-9-&.]+)-([0-9]+).html /index.php?action=view-customer&id=$2
 
 ErrorDocument 400 /index.php?action=error&ernum=400
 ErrorDocument 401 /index.php?action=error&ernum=401
