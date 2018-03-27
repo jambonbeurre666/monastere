@@ -5,5 +5,7 @@
     <?php require_once('loggin_module.php'); ?>
     </div>
     </div>
-    <?php require_once('menu_module.php'); ?>
+    <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] === true) {
+    require_once('menu_module.php');
+} ?>
 </header>
