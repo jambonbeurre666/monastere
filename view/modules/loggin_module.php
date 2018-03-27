@@ -2,11 +2,11 @@
 <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] === true) {
     ?>
      <div class="btn btn-outline-primary mr-2" >Bienvenue <?= $_SESSION['prenom'] . " " . $_SESSION['nom']; ?></div>
-    <a class="btn btn-primary " href="index.php?action=disconnect">Déconnexion</a>
+    <a class="btn btn-primary " href="deconnexion.html">Déconnexion</a>
 <?php
 } else {
         ?>
-    <form action="index.php?action=loggin" method="post" class="form-inline">
+    <form action="connexion.html" method="post" class="form-inline">
 
   <div class="form-group mb-2">
     <label for="mail" class="sr-only">Email</label>
