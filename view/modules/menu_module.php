@@ -12,7 +12,7 @@
         <a class="nav-link" href="/">Accueil</a>
       </li>
       <li class="nav-item <?= ($selected === "list") ? 'active' : ''; ?>">
-        <a class="nav-link" href="liste-clients.html">Liste des clients</a>
+        <a class="nav-link" href="/liste-clients/">Liste des clients</a>
       </li>
     <!--  <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
