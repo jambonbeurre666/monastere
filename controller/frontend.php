@@ -16,6 +16,8 @@ function isLogged()
 
 function homeController()
 {
+    $title = "Bienvenue sur le site Abi";
+    $scripts_footer = array("public/js/ajax_home.js");
     require('view/home_view.php');
 }
 
@@ -111,6 +113,8 @@ function disconnect()
 function listClient()
 {
     require_once('dao/ClientManager.php');
+    $title = "Liste des clients";
+    $selected = "list";
     $clientManager = new ClientManager();
     $results = $clientManager->getAllCustomers();
     require('view/clients_list_view.php');
@@ -119,38 +123,82 @@ function listClient()
 function viewCustomer()
 {
     if (isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])) {
-        $fieldname = array(
-            "RaisonSociale" => "Raison sociale",
-            "TypeClient" => "Type client",
-            "DomaineActivitée" => "Domaine d'activitée",
-            "AdresseClient" => "Adresse client",
-            "ChiffreAffaire" => "Chiffre d'affaire",
-            "ContactClients" => "Contact clients",
-            "CommentaireClients" => "Commentaire client",
-            "MailClient" => "Mail Client",
-            "nomRueClient" => "Rue",
-            "villeClient" => "Ville",
-            "codePostClient" => "Code postal",
-            "numRueClient" => "Numero"
-        );
-
         require_once('dao/ClientManager.php');
         $clientManager = new ClientManager();
         $result = $clientManager->getCustomer($_GET['id']);
+        $nature = $clientManager->getCustomerNature();
+        $type = $clientManager->getCustomerType();
 
+        $title = "Fiche Client de " . $result['RaisonSociale'];
+        $readonly = true;
+        $setvalue = true;
+        $keywordsarr = explode(',', $result['keywords']);
        
         require('view/client_view.php');
     } else {
         if ($_SESSION['logged'] === true) {
-            header('location:liste-clients.html');
+            header('location:/liste-clients/');
         }
     }
 }
 
-
-function generateRewritedUrl($id, $name, $prefix, $sep)
+function addCustomer()
 {
-    $returnurl = str_replace(' ', $sep, strtolower($name));
-    $returnurl = '/consulter' . $sep . $prefix . '/' . $returnurl . $sep . $id . '.html';
+    require_once('dao/ClientManager.php');
+    $clientManager = new ClientManager();
+    $nature = $clientManager->getCustomerNature();
+    $type = $clientManager->getCustomerType();
+
+    $readonly = false;
+    $setvalue = false;
+    $title = "Ajouter un client";
+
+    require('view/client_view.php');
+}
+
+function createCustomer()
+{
+    require_once('model/Client.php');
+    require_once('dao/ClientManager.php');
+
+    $custarray = array(
+        'raisonClient' => $_POST['raisonsociale'],
+        'typeClient' => $_POST['typeclient'],
+        'domaineActivitéClient' => $_POST['DomaineActivitée'],
+        'numeroRueClient' => $_POST['numerorue'],
+        'nomRueclient' => $_POST['adresse'],
+        'codepostalClient' => $_POST['cp'],
+        'villeClient' => $_POST['ville'],
+        'natureClient' => $_POST['nature'],
+        'effectifClient' => $_POST['effectifs'],
+        'caClient' => $_POST['chiffreaffaire'],
+        'commentaireClient' => $_POST['commentaire'],
+        'telephoneClient' => $_POST['telephone'],
+        'emailClient' => $_POST['mail'],
+        'motsCle' => $_POST['keywords']
+    );
+
+   $customer = new Client($custarray);
+   $clientManager = new ClientManager();
+   $valid = $clientManager->addCustomer($customer);
+
+   if($valid){
+       $_SESSION['nomclient'] = $_POST['raisonsociale'];
+       header('location:/liste-clients/');
+   }
+
+}
+
+
+function generateRewritedUrl($id, $name)
+{
+    $sep = "-";
+    $returnurl = str_replace(' ', $sep, strtolower(stripAccents($name)));
+    $returnurl = str_replace('_', $sep, $returnurl);
+    $returnurl = $returnurl . $sep . $id . '.html';
     return $returnurl;
+}
+
+function stripAccents($str) {
+    return strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
 }

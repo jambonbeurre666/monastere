@@ -8,23 +8,16 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item <?= ($selected === "home") ? 'active' : ''; ?>">
+      <li class="nav-item <?= ($_SERVER['REQUEST_URI'] === '/') ? 'active' : ''; ?>">
         <a class="nav-link" href="/">Accueil</a>
       </li>
-      <li class="nav-item <?= ($selected === "list") ? 'active' : ''; ?>">
+      <li class="nav-item <?= ($_SERVER['REQUEST_URI'] === '/liste-clients/') ? 'active' : ''; ?>">
         <a class="nav-link" href="/liste-clients/">Liste des clients</a>
       </li>
-    <!--  <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>-->
+      <li class="nav-item <?= ($_SERVER['REQUEST_URI'] === '/ajouter-client/') ? 'active' : ''; ?>">
+        <a class="nav-link" href="/ajouter-client/">Ajouter un clients</a>
+      </li>
+
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
