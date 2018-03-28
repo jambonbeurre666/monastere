@@ -1,4 +1,5 @@
 <?php
+define('ROOTPATH', __DIR__);
 session_start();
 require('controller/frontend.php');
 isLogged();
@@ -26,5 +27,3 @@ try {
 } catch (Exception $e) {
     echo $e->getMessage();
 }
-
-
