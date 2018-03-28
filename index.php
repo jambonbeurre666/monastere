@@ -15,6 +15,10 @@ try {
             listClient();
         } elseif ($_GET['action'] === "view-customer") {
             viewCustomer();
+        } elseif ($_GET['action'] === "add-customer") {
+            addCustomer();
+        } elseif ($_GET['action'] === "create-customer") {
+            CreateCustomer();
         } else {
             //throw new Exception("{$_GET['action']} n'existe pas !");
             http_response_code(404);
