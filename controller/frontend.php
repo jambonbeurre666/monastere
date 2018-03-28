@@ -119,8 +119,6 @@ function listClient()
 function viewCustomer()
 {
     if (isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])) {
-
-
         $fieldname = array(
             "RaisonSociale" => "Raison sociale",
             "TypeClient" => "Type client",
@@ -142,8 +140,6 @@ function viewCustomer()
 
        
         require('view/client_view.php');
-
-
     } else {
         if ($_SESSION['logged'] === true) {
             header('location:liste-clients.html');
@@ -152,9 +148,9 @@ function viewCustomer()
 }
 
 
-function generateRewritedUrl($id, $name, $prefix, $sep) {
+function generateRewritedUrl($id, $name, $prefix, $sep)
+{
     $returnurl = str_replace(' ', $sep, strtolower($name));
-    $returnurl = 'fiche' . $sep . $prefix . $sep . $returnurl . $sep . $id . '.html';
+    $returnurl = '/consulter' . $sep . $prefix . '/' . $returnurl . $sep . $id . '.html';
     return $returnurl;
-
 }
