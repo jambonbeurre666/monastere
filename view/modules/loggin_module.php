@@ -2,7 +2,7 @@
 <?php if (isset($_SESSION['logged']) && $_SESSION['logged'] === true) {
     ?>
      <div class="btn btn-outline-primary mr-2" >Bienvenue <?= $_SESSION['prenom'] . " " . $_SESSION['nom']; ?></div>
-    <a class="btn btn-primary " href="deconnexion.html">Déconnexion</a>
+    <a class="btn btn-primary " href="/deconnexion/">Déconnexion</a>
 <?php
 } else {
         ?>

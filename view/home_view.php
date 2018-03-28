@@ -1,5 +1,6 @@
 <?php
     $title = "Bienvenue sur le site Abi";
+    $selected = "home";
     $scripts_footer = array("public/js/ajax_home.js");
 
     ob_start();

@@ -62,10 +62,6 @@
     background-color: #fff; 
 }
 
-.nav-bar {
-
-}
-
 .logo-main  {
     width: 100px;
 }
@@ -84,5 +80,53 @@
 .table > tbody > tr > td {
     vertical-align: middle;
 }
-    
+
+.round-grad {
+    border-radius:50%;
+    overflow: hidden;
+background:url('http://thecatapi.com/api/images/get?format=src&type=gif') right top no-repeat;
+background-size:cover;
+background-color: crimson;
+-webkit-box-shadow: inset 0px 0px 32px -5px rgba(0,0,0,0.75);
+-moz-box-shadow: inset 0px 0px 32px -5px rgba(0,0,0,0.75);
+box-shadow: inset 0px 0px 32px -5px rgba(0,0,0,0.75);
+}
+
+.jumbotron {
+    position: relative;
+}
+
+.bck-jumbo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: no-repeat;
+    background-position: right center;
+    z-index: 0;
+}
+
+.grey-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 20%;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e9ecef+38,000000+100&1+38,0+100 */
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e9ecef+38,e9ecef+100&1+38,0+100 */
+background: -moz-linear-gradient(left, rgba(233,236,239,1) 38%, rgba(233,236,239,0) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(233,236,239,1) 38%,rgba(233,236,239,0) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(233,236,239,1) 38%,rgba(233,236,239,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9ecef', endColorstr='#00e9ecef',GradientType=1 ); /* IE6-9 */}
+
+.jumbotron .container {
+    z-index: 10;
+    position: relative;
+}
+
+footer {
+    height: 10em;
+}
+
 
