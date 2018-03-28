@@ -6,31 +6,38 @@ class Client
     //attributes
     private $idClient;
     private $raisonSociale;
-    private $nature;
     private $type;
-    private $adressemail;
-    private $adresse;
-    private $ville;
+    private $domaineActivite;
+    private $numRue;
+    private $nomRue;
     private $codePostal;
-    private $telephone ;
+    private $ville;
+    private $nature;
     private $ca;
     private $effectif;
     private $commentaire;
+    private $telephone ;
+    private $adressemail;
+    private $keyword;
 
     /**Constructeur */
     public function __construct($array)
     {
-        $this-> setIdClient($array['Id_Client']);
+        $this->setIdClient($array['Id_Client']);
         $this->setRaisonSociale($array['raison_Client']);
-        $this->setNature($array['nature_Client']);
         $this->setType($array['type_Client']);
-        $this->setAdressemail($array['email_Client']);
-        $this->setVille($array['ville_Client']);
+        $this->setDomaineActivite($array['domaine_Activité_Client']);
+        $this->setNumRue($array['numéro_Rue_Client']);
+        $this->setNomRue($array['nom_Rue_client']);
         $this->setCodePostal($array['code_postal_Client']);
-        $this->setTelephone($array['telephone_Client']);
+        $this->setVille($array['ville_Client']);
+        $this->setNature($array['nature_Client']);
         $this->setCa($array['ca_Client']);
         $this->setEffectif($array['effectif_Client']);
         $this->setCommentaire($array['commentaire_Client']);
+        $this->setTelephone($array['telephone_Client']);
+        $this->setAdressemail($array['email_Client']);
+        $this->setKeyword($array['mots_Clé']);
     }
 
     //VERIFICATION TELEPHONE
@@ -139,7 +146,7 @@ class Client
     public function setTelephone($telephone)
     {
         if ($this->validate_numeric($telephone)&& $this->lengthDigit($telephone)===10 && $this->is_digits($telephone)) {
-            $this->telephone = wordwrap($telephone, 2, " ", true);
+            $this->telephone = $telephone;
         } else {
             throw new Exception("Veuillez saisir un numéro valide");
         }
@@ -197,7 +204,52 @@ class Client
             $this->adressemail = $adressemail;
         } else {
             throw new Exception("Veuillez saisir une adresse mail valide");
-            
         }
     }
+    public function getDomaineActivite()
+    {
+        return $this->domaineActivite;
+    }
+
+    public function setDomaineActivite($domaineActivite)
+    {
+        $this->domaineActivite = $domaineActivite;
+    }
+
+    public function getNumRue()
+    {
+        return $this->numRue;
+    }
+
+    public function setNumRue($numRue)
+    {
+        $this->numRue = $numRue;
+    }
+
+    public function getNomRue()
+    {
+        return $this->nomRue;
+    }
+
+    public function setNomRue($nomRue)
+    {
+        if (!is_numeric($nomRue)) {
+            throw new Exception("Veuillez saisir un numéro de rue valide");
+        } else {
+            $this->nomRue = $nomRue;
+        }
+    }
+    public function getKeyword()
+    {
+        return $this->keyword;
+    }
+
+    public function setKeyword($keyword)
+    {
+      $keyword = preg_replace("/[^ \w]+ /", "", $keyword);
+      $keyword = preg_replace("/ /", ",", $keyword);
+      $this->keyword = $keyword;
+    }
+
+   
 }
