@@ -3,7 +3,7 @@ console.log('script home_view.js chargé');
 $(".btn-loggin").click(function(e){
     e.preventDefault();     
     $.ajax({
-       url : 'index.php?action=loggin',
+       url : '/connexion/',
        type : 'POST',
        dataType : 'json',
        data : {
@@ -11,7 +11,7 @@ $(".btn-loggin").click(function(e){
         pass : $("input[name='pass']").val(),
        },
        success : function(code_html, statut){ 
-        window.location.replace("liste-clients.html");
+        window.location.replace("/liste-clients/");
        },
 
        error : function(xhr, statut, erreur){
