@@ -5,25 +5,42 @@ require('controller/frontend.php');
 isLogged();
 try {
     if (isset($_GET['action']) && $_GET['action'] !== "") {
-        if ($_GET['action'] === "loggin") {
-            verifyUser();
-        } elseif ($_GET['action'] === "disconnect") {
-            disconnect();
-        } elseif ($_GET['action'] === "error") {
-            pageErreur();
-        } elseif ($_GET['action'] === "customers-list") {
-            listClient();
-        } elseif ($_GET['action'] === "view-customer") {
-            viewCustomer();
-        } elseif ($_GET['action'] === "add-customer") {
-            addCustomer();
-        } elseif ($_GET['action'] === "create-customer") {
-            CreateCustomer();
-        } else {
-            //throw new Exception("{$_GET['action']} n'existe pas !");
-            http_response_code(404);
-
-            //header("location: index.php");
+        switch($_GET['action']) {
+            case "login":
+                verifyUser();
+                break;
+            case "disconnect":
+                disconnect();
+                break;
+            case "error":
+                pageErreur();
+                break;
+            case "customers-list":
+                listClient();
+                break;
+            case "view-customer":
+                viewCustomer(false);
+                break;
+            case "add-customer":
+                addCustomer();
+                break;
+            case "create-customer":
+                CreateCustomer(true);
+                break;
+            case "delete-customer":
+                deleteCustomer();
+                break;
+            case "update-customer":
+                viewCustomer(true);
+                break;
+            case "add-update-customer":
+                CreateCustomer(false);
+                break;         
+            default:
+                http_response_code(404);
+                //throw new Exception("{$_GET['action']} n'existe pas !");
+                //header("location: index.php");
+                break;
         }
     } else {
         homeController();
