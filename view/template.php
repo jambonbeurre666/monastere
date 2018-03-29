@@ -31,7 +31,7 @@
             $( document ).ready(function() {
                 <?php
                     foreach ($scripts_footer as $script) {
-                        echo '$.getScript("'.$script.'")';
+                        echo '$.getScript("'.$script.'");';
                     } ?>
             });
         </script>
