@@ -15,10 +15,17 @@ ob_start();
       <p class="lead">Téléphone :
         <?= wordwrap($result['Telephone'], 2, " ", true); ?>
       </p>
+      <?php 
+      if($readonly) {
+        $url = generateRewritedUrl($result['idClient'], $result['RaisonSociale']);
+        echo '<a href="/modifier-client/'. $url. '" class="btn btn-primary">Modifier ce client</a>';
+      }
+      ?>
     </div>
   </div>
 <?php
-} ?>
+} 
+?>
 
   <div class="row">
   <?php require('view/modules/form_client_module.php'); ?> 
