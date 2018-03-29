@@ -9,3 +9,7 @@
     require_once('menu_module.php');
 } ?>
 </header>
+
+<?php 
+require_once('notifications_module.php');
+?>
