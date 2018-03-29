@@ -1,7 +1,7 @@
 RewriteEngine On
 RewriteRule ^liste-clients/([0-9]+)/$ /index.php?action=customers-list&page=$1
 RewriteRule ^deconnexion/$ /index.php?action=disconnect
-RewriteRule ^connexion/$ /index.php?action=loggin
+RewriteRule ^connexion/$ /index.php?action=login
 RewriteRule ^ajouter-client/$ /index.php?action=add-customer
 RewriteRule ^creer-client/$ /index.php?action=create-customer
 RewriteRule ^maj-client/$ /index.php?action=add-update-customer
