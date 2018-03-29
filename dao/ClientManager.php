@@ -46,7 +46,7 @@ class ClientManager extends Manager
         ));
         
         if(!$result) {
-            throw new Exception($req->errorInfo());
+            throw new Exception($req->errorInfo()[2]);
         }
         $req->closeCursor();
         return $result;
@@ -54,10 +54,42 @@ class ClientManager extends Manager
 
     public function deleteCustomer($id)
     {
+            $req = $this->conn->prepare('DELETE FROM `clients` WHERE idClient = ?');
+            $result = $req->execute(array($id));
+            $req->closeCursor();
+            if(!$result) {
+                throw new Exception($req->errorInfo()[2]);
+            }
+            $req->closeCursor();
+            return $result;
     }
 
-    public function updateCustomer(Client $cust)
+    public function updateCustomer(Client $cust, $id)
     {
+        $req = $this->conn->prepare('UPDATE `clients` SET RaisonSociale = :raisonSociale, TypeClient = :typeClient, DomaineActivitée = :domaineActivite, numRueClient = :numRue, nomRueClient = :nomRue, codePostClient = :codePostal, villeClient = :ville, Nature = :nature, ChiffreAffaire = :ca, Effectifs = :effectif, CommentaireClients = :commentaire, Telephone = :telephone, MailClient = :adressemail, keywords = :keyword WHERE idClient = :id');
+        $result = $req->execute(array(
+          'raisonSociale'=>$cust->getRaisonSociale(),
+          'typeClient'=>$cust->getType(),
+          'domaineActivite'=>$cust->getDomaineActivite(),
+          'numRue'=>$cust->getNumRue(),
+          'nomRue'=>$cust->getNomRue(),
+          'codePostal'=>$cust->getCodePostal(),
+          'ville'=>$cust->getVille(),
+          'nature'=>utf8_encode($cust->getNature()),
+          'ca'=>$cust->getCa(),
+          'effectif'=>$cust->getEffectif(),
+          'commentaire'=>$cust->getCommentaire(),
+          'telephone'=>$cust->getTelephone(),
+          'adressemail'=>$cust->getAdressemail(),
+          'keyword'=>$cust->getKeyword(),
+          'id'=> $id
+        ));
+
+        if(!$result) {
+            throw new Exception($req->errorInfo()[2]);
+        }
+        $req->closeCursor();
+        return $result;
     }
 
     public function getCustomerNature()
@@ -71,6 +103,13 @@ class ClientManager extends Manager
     public function getCustomerType()
     {
         $req = $this->conn->query('SELECT nom FROM `type` ORDER BY id ASC');
+        $result = $req->fetchAll();
+        $req->closeCursor();
+        return $result;
+    }
+
+    public function getKeywords() {
+        $req = $this->conn->query('SELECT keywords FROM `clients`');
         $result = $req->fetchAll();
         $req->closeCursor();
         return $result;
