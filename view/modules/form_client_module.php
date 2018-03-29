@@ -1,6 +1,7 @@
 <div class="col">
 
-        <form action="/creer-client/" method="post">
+        <form action="<?= (isset($update) && $update) ? '/maj-client/' : '/creer-client/' ?>" method="post">
+          <input type="hidden" name="id" value="<?= (isset($result['idClient'])) ? $result['idClient'] : '' ?>">
           <h5 class="text-primary mb-3 pb-3 border-bottom">Informations client</h5>
           <div class="form-row">
             <div class="form-group col-md-12">
@@ -113,8 +114,10 @@
             
           </div>
           <?php if (!$readonly) {
+          
                 ?>
-            <button type="submit" class="btn btn-primary float-right">Ajouter ce client</button>
+                
+            <button type="submit" class="btn btn-primary float-right"><?= (isset($update) && $update) ? 'Modifier' : 'Ajouter' ?> ce client</button>
         
           <?php
             } ?>
