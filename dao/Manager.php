@@ -10,4 +10,9 @@ class Manager
         $db = Connection::getInstance();
         $this->conn = $db->getDb();
     }
+
+    public function getLastId()
+    {
+        return $this->conn->lastInsertId();
+    }
 }
