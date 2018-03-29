@@ -209,7 +209,7 @@ function createCustomer($new)
 
     if ($valid) {
         $_SESSION['nomclient'] = $_POST['raisonsociale'];
-        $_SESSION['phrase'] = ($new) ? 'à bien été ajouté !' : 'à bien été modifié';
+        $_SESSION['phrase'] = ($new) ? 'à bien été ajouté !' : 'à bien été modifié.';
         header('location:/liste-clients/1/');
     }
 }
