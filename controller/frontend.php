@@ -114,9 +114,9 @@ function listClient()
 {
     $page = intval($_GET['page']);
     $offset = (isset($_SESSION['pages'])) ? $_SESSION['pages'] : 5;
-    $start = ($page === 1) ? 0 : ($page - 1) * $offset ;
+    $start = ($page - 1) * $offset ;
 
-    $scripts_footer = array('/public/js/select_pages.js');
+    $scripts_footer = array('/public/js/select_pages.js','/public/js/modal_confirmation.js');
 
     require_once('dao/ClientManager.php');
     $title = "Liste des clients";
@@ -125,7 +125,7 @@ function listClient()
     $rowcount = $clientManager->rowCount();
     $pagestemp = floor($rowcount / $offset);
     $nbrpages = ($rowcount - $pagestemp == 0) ? $pagestemp : $pagestemp + 1;
-    $keywords = implode(",", flattenArray($clientManager->getKeywords()));
+    $keyword =$clientManager->getKeyword()['keywords'];
 
     require('view/clients_list_view.php');
 }
@@ -203,14 +203,17 @@ function createCustomer($new)
 
     if ($new) {
         $valid = $clientManager->addCustomer($customer);
+      
+        $urlreturn = generateRewritedUrl($clientManager->getLastId(), $customer->getRaisonSociale());
     } else {
         $valid = $clientManager->updateCustomer($customer, $_POST['id']);
+        $urlreturn = generateRewritedUrl($_POST['id'], $customer->getRaisonSociale());
     }
-
+    
     if ($valid) {
         $_SESSION['nomclient'] = $_POST['raisonsociale'];
         $_SESSION['phrase'] = ($new) ? 'à bien été ajouté !' : 'à bien été modifié.';
-        header('location:/liste-clients/1/');
+        header('location:/consulter-client/'. $urlreturn);
     }
 }
 
@@ -222,7 +225,7 @@ function deleteCustomer()
     if ($valid) {
         $_SESSION['nomclient'] = 'à bien été supprimé !';
         $_SESSION['phrase'] = '';
-        header('location:/liste-clients/');
+        header('location:/liste-clients/1/');
     }
 }
 
