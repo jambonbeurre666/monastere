@@ -116,10 +116,14 @@ class ClientManager extends Manager
         return $result;
     }
 
-    public function getKeywords()
+    public function getKeyword()
     {
-        $req = $this->conn->query('SELECT keywords FROM `clients`');
-        $result = $req->fetchAll();
+        $req = $this->conn->query('SELECT keywords FROM `clients` ORDER BY RAND() LIMIT 1');
+        $result = $req->fetch();
+
+        if (!$result) {
+            throw new Exception($req->errorInfo()[2]);
+        }
         $req->closeCursor();
         return $result;
     }
