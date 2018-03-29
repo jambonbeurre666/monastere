@@ -11,8 +11,8 @@
       <li class="nav-item <?= ($_SERVER['REQUEST_URI'] === '/') ? 'active' : ''; ?>">
         <a class="nav-link" href="/">Accueil</a>
       </li>
-      <li class="nav-item <?= ($_SERVER['REQUEST_URI'] === '/liste-clients/') ? 'active' : ''; ?>">
-        <a class="nav-link" href="/liste-clients/">Liste des clients</a>
+      <li class="nav-item <?= (substr($_SERVER['REQUEST_URI'], 0, strlen('/liste-clients/')) === '/liste-clients/') ? 'active' : ''; ?>">
+        <a class="nav-link" href="/liste-clients/1/">Liste des clients</a>
       </li>
       <li class="nav-item <?= ($_SERVER['REQUEST_URI'] === '/ajouter-client/') ? 'active' : ''; ?>">
         <a class="nav-link" href="/ajouter-client/">Ajouter un clients</a>

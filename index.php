@@ -5,7 +5,7 @@ require('controller/frontend.php');
 isLogged();
 try {
     if (isset($_GET['action']) && $_GET['action'] !== "") {
-        switch($_GET['action']) {
+        switch ($_GET['action']) {
             case "login":
                 verifyUser();
                 break;
@@ -35,7 +35,12 @@ try {
                 break;
             case "add-update-customer":
                 CreateCustomer(false);
-                break;         
+                break;
+            case "change-list-size":
+                changeListSize();
+                break;
+                
+              
             default:
                 http_response_code(404);
                 //throw new Exception("{$_GET['action']} n'existe pas !");

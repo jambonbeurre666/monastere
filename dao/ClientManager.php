@@ -10,8 +10,18 @@ class ClientManager extends Manager
         $results = $req->fetchAll();
         $req->closeCursor();
         return $results;
+    }
 
+    public function getAllCustomersRange($start, $offset)
+    {
+        $req = $this->conn->query('SELECT idClient, RaisonSociale, Telephone, MailClient FROM `clients` ORDER BY RaisonSociale ASC LIMIT '.$start.','.$offset.'');
+        $results = $req->fetchAll();
 
+        if (!$results) {
+            throw new Exception($req->errorInfo()[2]);
+        }
+        $req->closeCursor();
+        return $results;
     }
 
     public function getCustomer($id)
@@ -21,8 +31,6 @@ class ClientManager extends Manager
         $result = $req->fetch();
         $req->closeCursor();
         return $result;
-
-        
     }
 
     public function addCustomer(Client $customer)
@@ -45,7 +53,7 @@ class ClientManager extends Manager
           'keyword'=>$customer->getKeyword()
         ));
         
-        if(!$result) {
+        if (!$result) {
             throw new Exception($req->errorInfo()[2]);
         }
         $req->closeCursor();
@@ -54,14 +62,14 @@ class ClientManager extends Manager
 
     public function deleteCustomer($id)
     {
-            $req = $this->conn->prepare('DELETE FROM `clients` WHERE idClient = ?');
-            $result = $req->execute(array($id));
-            $req->closeCursor();
-            if(!$result) {
-                throw new Exception($req->errorInfo()[2]);
-            }
-            $req->closeCursor();
-            return $result;
+        $req = $this->conn->prepare('DELETE FROM `clients` WHERE idClient = ?');
+        $result = $req->execute(array($id));
+        $req->closeCursor();
+        if (!$result) {
+            throw new Exception($req->errorInfo()[2]);
+        }
+        $req->closeCursor();
+        return $result;
     }
 
     public function updateCustomer(Client $cust, $id)
@@ -85,7 +93,7 @@ class ClientManager extends Manager
           'id'=> $id
         ));
 
-        if(!$result) {
+        if (!$result) {
             throw new Exception($req->errorInfo()[2]);
         }
         $req->closeCursor();
@@ -108,9 +116,18 @@ class ClientManager extends Manager
         return $result;
     }
 
-    public function getKeywords() {
+    public function getKeywords()
+    {
         $req = $this->conn->query('SELECT keywords FROM `clients`');
         $result = $req->fetchAll();
+        $req->closeCursor();
+        return $result;
+    }
+
+    public function rowCount()
+    {
+        $req = $this->conn->query('SELECT Count(*) FROM `clients`');
+        $result = $req->fetchColumn();
         $req->closeCursor();
         return $result;
     }

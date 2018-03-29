@@ -112,13 +112,29 @@ function disconnect()
 
 function listClient()
 {
+    $page = intval($_GET['page']);
+    $offset = (isset($_SESSION['pages'])) ? $_SESSION['pages'] : 5;
+    $start = ($page === 1) ? 0 : ($page - 1) * $offset ;
+
+    $scripts_footer = array('/public/js/select_pages.js');
+
     require_once('dao/ClientManager.php');
     $title = "Liste des clients";
     $clientManager = new ClientManager();
-    $results = $clientManager->getAllCustomers();
+    $results = $clientManager->getAllCustomersRange($start, $offset);
+    $rowcount = $clientManager->rowCount();
+    $pagestemp = floor($rowcount / $offset);
+    $nbrpages = ($rowcount - $pagestemp == 0) ? $pagestemp : $pagestemp + 1;
     $keywords = implode(",", flattenArray($clientManager->getKeywords()));
 
     require('view/clients_list_view.php');
+}
+
+function changeListSize()
+{
+    echo 'coucou';
+    $_SESSION['pages'] = $_POST['pages'];
+    header('location:/liste-clients/1/');
 }
 
 function viewCustomer($update)
@@ -138,7 +154,7 @@ function viewCustomer($update)
         require('view/client_view.php');
     } else {
         if ($_SESSION['logged'] === true) {
-            header('location:/liste-clients/');
+            header('location:/liste-clients/1/');
         }
     }
 }
@@ -156,6 +172,8 @@ function addCustomer()
 
     require('view/client_view.php');
 }
+
+
 
 function createCustomer($new)
 {
@@ -192,7 +210,7 @@ function createCustomer($new)
     if ($valid) {
         $_SESSION['nomclient'] = $_POST['raisonsociale'];
         $_SESSION['phrase'] = ($new) ? 'à bien été ajouté !' : 'à bien été modifié';
-        header('location:/liste-clients/');
+        header('location:/liste-clients/1/');
     }
 }
 
