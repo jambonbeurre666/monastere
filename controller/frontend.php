@@ -114,13 +114,14 @@ function listClient()
 {
     require_once('dao/ClientManager.php');
     $title = "Liste des clients";
-    $selected = "list";
     $clientManager = new ClientManager();
     $results = $clientManager->getAllCustomers();
+    $keywords = implode(",", flattenArray($clientManager->getKeywords()));
+
     require('view/clients_list_view.php');
 }
 
-function viewCustomer()
+function viewCustomer($update)
 {
     if (isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])) {
         require_once('dao/ClientManager.php');
@@ -130,7 +131,7 @@ function viewCustomer()
         $type = $clientManager->getCustomerType();
 
         $title = "Fiche Client de " . $result['RaisonSociale'];
-        $readonly = true;
+        $readonly = ($update) ? false : true;
         $setvalue = true;
         $keywordsarr = explode(',', $result['keywords']);
        
@@ -156,7 +157,7 @@ function addCustomer()
     require('view/client_view.php');
 }
 
-function createCustomer()
+function createCustomer($new)
 {
     require_once('model/Client.php');
     require_once('dao/ClientManager.php');
@@ -175,30 +176,61 @@ function createCustomer()
         'commentaireClient' => $_POST['commentaire'],
         'telephoneClient' => $_POST['telephone'],
         'emailClient' => $_POST['mail'],
-        'motsCle' => $_POST['keywords']
+        'motsCle' => $_POST['keywords'],
+
     );
 
-   $customer = new Client($custarray);
-   $clientManager = new ClientManager();
-   $valid = $clientManager->addCustomer($customer);
+    $customer = new Client($custarray);
+    $clientManager = new ClientManager();
 
-   if($valid){
-       $_SESSION['nomclient'] = $_POST['raisonsociale'];
-       header('location:/liste-clients/');
-   }
+    if ($new) {
+        $valid = $clientManager->addCustomer($customer);
+    } else {
+        $valid = $clientManager->updateCustomer($customer, $_POST['id']);
+    }
 
+    if ($valid) {
+        $_SESSION['nomclient'] = $_POST['raisonsociale'];
+        $_SESSION['phrase'] = ($new) ? 'à bien été ajouté !' : 'à bien été modifié';
+        header('location:/liste-clients/');
+    }
+}
+
+function deleteCustomer()
+{
+    require_once('dao/ClientManager.php');
+    $clientManager = new ClientManager();
+    $valid = $clientManager->deleteCustomer($_GET["id"]);
+    if ($valid) {
+        $_SESSION['nomclient'] = 'à bien été supprimé !';
+        $_SESSION['phrase'] = '';
+        header('location:/liste-clients/');
+    }
 }
 
 
 function generateRewritedUrl($id, $name)
 {
     $sep = "-";
-    $returnurl = str_replace(' ', $sep, strtolower(stripAccents($name)));
-    $returnurl = str_replace('_', $sep, $returnurl);
-    $returnurl = $returnurl . $sep . $id . '.html';
+    $nameclean = strtolower(stripAccents($name));
+    $returnurl = $nameclean . $sep . $id . '.html';
     return $returnurl;
 }
 
-function stripAccents($str) {
-    return strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+function stripAccents($str)
+{
+    return strtr(utf8_decode($str), utf8_decode(' _àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), '--aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+}
+
+function flattenArray($arrayToFlatten)
+{
+    $flatArray = array();
+    foreach ($arrayToFlatten as $element) {
+        if (is_array($element)) {
+            $flatArray = array_merge($flatArray, flattenArray($element));
+        } else {
+            $flatArray[] = $element;
+        }
+    }
+    return $flatArray;
 }
