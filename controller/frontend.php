@@ -55,46 +55,45 @@ function verifyUser()
 function pageErreur()
 {
     switch ($_GET['ernum']) {
-   case '400':
-   $error = 'Échec de l\'analyse HTTP.';
-   break;
-   case '401':
-   $error =  'Le pseudo ou le mot de passe n\'est pas correct !';
-   break;
-   case '402':
-   $error = 'Le client doit reformuler sa demande avec les bonnes données de paiement.';
-   break;
-   case '403':
-   $error =  'Requête interdite !';
-   break;
-   case '404':
-   $error =  'La page n\'existe pas ou plus !';
-   break;
-   case '405':
-   $error =  'Méthode non autorisée.';
-   break;
-   case '500':
-   $error =  'Erreur interne au serveur ou serveur saturé.';
-   break;
-   case '501':
-   $error =  'Le serveur ne supporte pas le service demandé.';
-   break;
-   case '502':
-   $error =  'Mauvaise passerelle.';
-   break;
-   case '503':
-   $error =  ' Service indisponible.';
-   break;
-   case '504':
-   $error =  'Trop de temps à la réponse.';
-   break;
-   case '505':
-   $error =  'Version HTTP non supportée.';
-   break;
-   default:
-   $error =  'Erreur !';
-}
-
+        case '400':
+            $error = 'Échec de l\'analyse HTTP.';
+            break;
+        case '401':
+            $error =  'Le pseudo ou le mot de passe n\'est pas correct !';
+            break;
+        case '402':
+            $error = 'Le client doit reformuler sa demande avec les bonnes données de paiement.';
+            break;
+        case '403':
+            $error =  'Requête interdite !';
+            break;
+        case '404':
+            $error =  'La page n\'existe pas ou plus !';
+            break;
+        case '405':
+            $error =  'Méthode non autorisée.';
+            break;
+        case '500':
+            $error =  'Erreur interne au serveur ou serveur saturé.';
+            break;
+        case '501':
+            $error =  'Le serveur ne supporte pas le service demandé.';
+            break;
+        case '502':
+            $error =  'Mauvaise passerelle.';
+            break;
+        case '503':
+            $error =  ' Service indisponible.';
+            break;
+        case '504':
+            $error =  'Trop de temps à la réponse.';
+            break;
+        case '505':
+            $error =  'Version HTTP non supportée.';
+            break;
+        default:
+            $error =  'Erreur !';
+    }
     require('view/error_view.php');
 }
 
@@ -173,8 +172,6 @@ function addCustomer()
     require('view/client_view.php');
 }
 
-
-
 function createCustomer($new)
 {
     require_once('model/Client.php');
@@ -195,7 +192,6 @@ function createCustomer($new)
         'telephoneClient' => $_POST['telephone'],
         'emailClient' => $_POST['mail'],
         'motsCle' => $_POST['keywords'],
-
     );
 
     $customer = new Client($custarray);
@@ -229,7 +225,6 @@ function deleteCustomer()
     }
 }
 
-
 function generateRewritedUrl($id, $name)
 {
     $sep = "-";
@@ -241,17 +236,4 @@ function generateRewritedUrl($id, $name)
 function stripAccents($str)
 {
     return strtr(utf8_decode($str), utf8_decode(' _àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), '--aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
-}
-
-function flattenArray($arrayToFlatten)
-{
-    $flatArray = array();
-    foreach ($arrayToFlatten as $element) {
-        if (is_array($element)) {
-            $flatArray = array_merge($flatArray, flattenArray($element));
-        } else {
-            $flatArray[] = $element;
-        }
-    }
-    return $flatArray;
 }
