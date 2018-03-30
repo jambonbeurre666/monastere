@@ -104,9 +104,7 @@
                 ?>
             <div class="form-group col-md-12">
               <label for="keywords">Mots clefs image</label>
-              <input type="text" class="form-control" placeholder="Mots clefs image" name="keywords" rows="6" value="<?= ($setvalue) ? $result['keywords'] : ""; ?>" <?= ($readonly) ? "readonly" : "" ?>>
-              <small class="form-text text-muted">Entrez les mots clefs sans espaces, séparés par des virgules.
-</small>
+              <input type="hidden" class="form-control" placeholder="Mots clefs image" name="keywords" rows="6" value="<?= ($setvalue) ? $result['keywords'] : ""; ?>" <?= ($readonly) ? "readonly" : "" ?>>
             </div>
             <?php
             } ?>
