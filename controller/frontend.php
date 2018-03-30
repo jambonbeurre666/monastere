@@ -167,6 +167,7 @@ function viewCustomer($update)
 function addCustomer()
 {
     require_once('dao/ClientManager.php');
+    $css_header = array('/public/css/tagify.css');
     $scripts_header = array('/public/js/jQuery.tagify.min.js');
     $scripts_footer = array('/public/js/tag_init.js');
 
