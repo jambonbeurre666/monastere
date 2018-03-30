@@ -139,6 +139,12 @@ function changeListSize()
 function viewCustomer($update)
 {
     if (isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])) {
+        if ($update) {
+            $css_header = array('/public/css/tagify.css');
+            $scripts_header = array('/public/js/jQuery.tagify.min.js');
+            $scripts_footer = array('/public/js/tag_init.js');
+        }
+
         require_once('dao/ClientManager.php');
         $clientManager = new ClientManager();
         $result = $clientManager->getCustomer($_GET['id']);
@@ -161,6 +167,9 @@ function viewCustomer($update)
 function addCustomer()
 {
     require_once('dao/ClientManager.php');
+    $scripts_header = array('/public/js/jQuery.tagify.min.js');
+    $scripts_footer = array('/public/js/tag_init.js');
+
     $clientManager = new ClientManager();
     $nature = $clientManager->getCustomerNature();
     $type = $clientManager->getCustomerType();

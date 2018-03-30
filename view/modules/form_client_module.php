@@ -1,5 +1,4 @@
 <div class="col">
-
         <form action="<?= (isset($update) && $update) ? '/maj-client/' : '/creer-client/' ?>" method="post">
           <input type="hidden" name="id" value="<?= (isset($result['idClient'])) ? $result['idClient'] : '' ?>">
           <h5 class="text-primary mb-3 pb-3 border-bottom">Informations client</h5>
@@ -91,30 +90,28 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="commentaire">Commentaire</label>
-              <textarea class="form-control" placeholder="Commentaire" name="commentaire" rows="6" value="<?= ($setvalue) ? $result['CommentaireClients
-'] : ""; ?>" <?= ($readonly) ? "readonly" : "" ?>></textarea>
+              <textarea class="form-control" placeholder="Commentaire" name="commentaire" rows="6" <?= ($readonly) ? "readonly" : "" ?>><?= ($setvalue) ? $result['CommentaireClients'] : ""; ?></textarea>
             </div>
 
-            <?php if($readonly) { 
-               echo '<div class="form-group col-md-12">';
-               echo '<p>Mots clefs image</p>';
-               foreach($keywordsarr as $keyword) {
-                 echo '<span class="badge badge-primary mr-2 p-2"><span class="h6">' . $keyword . '</span></span>';
-               }
-               echo '</div>';
-               } else { ?>
+            <?php if ($readonly) {
+                echo '<div class="form-group col-md-12">';
+                echo '<p>Mots clefs image</p>';
+                foreach ($keywordsarr as $keyword) {
+                    echo '<span class="badge badge-primary mr-2 p-2"><span class="h6">' . $keyword . '</span></span>';
+                }
+                echo '</div>';
+            } else {
+                ?>
             <div class="form-group col-md-12">
               <label for="keywords">Mots clefs image</label>
-              <input type="text" class="form-control" placeholder="Mots clefs image" name="keywords" rows="6" value="<?= ($setvalue) ? $result['keywords'] : ""; ?>" <?= ($readonly) ? "readonly" : "" ?>>
-              <small class="form-text text-muted">Entrez les mots clefs sans espaces, séparés par des virgules.
-</small>
+              <input type="hidden" class="form-control" placeholder="Mots clefs image" name="keywords" rows="6" value="<?= ($setvalue) ? $result['keywords'] : ""; ?>" <?= ($readonly) ? "readonly" : "" ?>>
             </div>
-            <?php } ?>
+            <?php
+            } ?>
 
             
           </div>
           <?php if (!$readonly) {
-          
                 ?>
                 
             <button type="submit" class="btn btn-primary float-right"><?= (isset($update) && $update) ? 'Modifier' : 'Ajouter' ?> ce client</button>
