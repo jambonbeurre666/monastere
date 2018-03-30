@@ -1,4 +1,4 @@
-console.log('select-pages.js chargé');
+console.log('tag-init.js chargé');
 
     $('[name=keywords]')
     .tagify()
