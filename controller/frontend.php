@@ -111,52 +111,18 @@ function disconnect()
 
 function listClient($search)
 {
-    $row = array(
-        'raison-sociale' => array(
-            'value' => 'RaisonSociale',
-            'text' => 'Raison sociale'
-        ),
-        'telephone' => array(
-            'value' => 'Telephone',
-            'text' => 'Telephone'
-        ),
-        'email' => array(
-            'value' => 'MailClient',
-            'text' => 'Email'
-        ),
-        'domaine-d-activite' => array(
-            'value' => 'DomaineActivitée',
-            'text' => 'Domaine d\'activité'
-        ),
-        'code-postal' => array(
-            'value' => 'codePostClient',
-            'text' => 'Code postale'
-        ),
-        'ville' => array(
-            'value' =>  'villeClient',
-            'text' => 'Ville'
-        ),
-        'type' => array(
-            'value' => 'TypeClient',
-            'text' => 'Type'
-        ),
-        'nature' => array(
-            'value' =>  'Nature',
-            'text' => 'Nature'
-        )
-    );
-
+    $localrow = unserialize(SEARCHROWS);
+    $scripts_footer = array('/public/js/select_pages.js','/public/js/modal_confirmation.js');
     require_once('dao/ClientManager.php');
     $clientManager = new ClientManager();
     if ($search) {
         require_once('dao/SearchManager.php');
         $searchmanager = new SearchManager();
-        $results = $searchmanager->search($row[$_GET['row']]['value'], $_GET['query']);
+        $results = $searchmanager->search($localrow[$_GET['row']]['value'], $_GET['query']);
     } else {
         $page = intval($_GET['page']);
         $offset = (isset($_SESSION['pages'])) ? $_SESSION['pages'] : 5;
         $start = ($page - 1) * $offset ;
-        $scripts_footer = array('/public/js/select_pages.js','/public/js/modal_confirmation.js');
         $results = $clientManager->getAllCustomersRange($start, $offset);
         $rowcount = $clientManager->rowCount();
         $pagestemp = floor($rowcount / $offset);
