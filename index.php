@@ -3,6 +3,7 @@ define('ROOTPATH', __DIR__);
 session_start();
 require('controller/frontend.php');
 isLogged();
+
 try {
     if (isset($_GET['action']) && $_GET['action'] !== "") {
         switch ($_GET['action']) {
@@ -16,7 +17,7 @@ try {
                 pageErreur();
                 break;
             case "customers-list":
-                listClient();
+                listClient(false);
                 break;
             case "view-customer":
                 viewCustomer(false);
@@ -39,8 +40,12 @@ try {
             case "change-list-size":
                 changeListSize();
                 break;
-                
-              
+            case "search":
+                search();
+                break;
+            case "search-result":
+                listClient(true);
+                break;
             default:
                 http_response_code(404);
                 //throw new Exception("{$_GET['action']} n'existe pas !");
