@@ -109,23 +109,63 @@ function disconnect()
     header('location:/');
 }
 
-function listClient()
+function listClient($search)
 {
-    $page = intval($_GET['page']);
-    $offset = (isset($_SESSION['pages'])) ? $_SESSION['pages'] : 5;
-    $start = ($page - 1) * $offset ;
-
-    $scripts_footer = array('/public/js/select_pages.js','/public/js/modal_confirmation.js');
+    $row = array(
+        'raison-sociale' => array(
+            'value' => 'RaisonSociale',
+            'text' => 'Raison sociale'
+        ),
+        'telephone' => array(
+            'value' => 'Telephone',
+            'text' => 'Telephone'
+        ),
+        'email' => array(
+            'value' => 'MailClient',
+            'text' => 'Email'
+        ),
+        'domaine-d-activite' => array(
+            'value' => 'DomaineActivitée',
+            'text' => 'Domaine d\'activité'
+        ),
+        'code-postal' => array(
+            'value' => 'codePostClient',
+            'text' => 'Code postale'
+        ),
+        'ville' => array(
+            'value' =>  'villeClient',
+            'text' => 'Ville'
+        ),
+        'type' => array(
+            'value' => 'TypeClient',
+            'text' => 'Type'
+        ),
+        'nature' => array(
+            'value' =>  'Nature',
+            'text' => 'Nature'
+        )
+    );
 
     require_once('dao/ClientManager.php');
-    $title = "Liste des clients";
     $clientManager = new ClientManager();
-    $results = $clientManager->getAllCustomersRange($start, $offset);
-    $rowcount = $clientManager->rowCount();
-    $pagestemp = floor($rowcount / $offset);
-    $nbrpages = ($rowcount - $pagestemp == 0) ? $pagestemp : $pagestemp + 1;
+    if ($search) {
+        require_once('dao/SearchManager.php');
+        $searchmanager = new SearchManager();
+        $results = $searchmanager->search($row[$_GET['row']]['value'], $_GET['query']);
+    } else {
+        $page = intval($_GET['page']);
+        $offset = (isset($_SESSION['pages'])) ? $_SESSION['pages'] : 5;
+        $start = ($page - 1) * $offset ;
+        $scripts_footer = array('/public/js/select_pages.js','/public/js/modal_confirmation.js');
+        $results = $clientManager->getAllCustomersRange($start, $offset);
+        $rowcount = $clientManager->rowCount();
+        $pagestemp = floor($rowcount / $offset);
+        $nbrpages = ($rowcount - $pagestemp == 0) ? $pagestemp : $pagestemp + 1;
+    }
+   
+    $title = "Liste des clients";
+   
     $keyword =$clientManager->getKeyword()['keywords'];
-
     require('view/clients_list_view.php');
 }
 
@@ -235,6 +275,12 @@ function deleteCustomer()
     }
 }
 
+
+function search()
+{
+    header('location:/resultat-recherche/' . $_POST['row'] . '/' . $_POST['search']);
+}
+
 function generateRewritedUrl($id, $name)
 {
     $sep = "-";
@@ -246,4 +292,9 @@ function generateRewritedUrl($id, $name)
 function stripAccents($str)
 {
     return strtr(utf8_decode($str), utf8_decode(' _àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), '--aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+}
+
+function spanAround($needle, $haystack)
+{
+    return preg_replace('/('.$needle.')/i', '<span class="bg-warning pt-1 pb-1">$1</span>', $haystack);
 }
