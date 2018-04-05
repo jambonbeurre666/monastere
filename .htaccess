@@ -4,10 +4,10 @@ RewriteRule ^deconnexion/$ /index.php?action=disconnect
 RewriteRule ^connexion/$ /index.php?action=login
 RewriteRule ^ajouter-client/$ /index.php?action=add-customer
 RewriteRule ^creer-client/$ /index.php?action=create-customer
+RewriteRule ^recherche/$ /index.php?action=search
+RewriteRule ^resultat-recherche/([a-zA-Z0-9-&.]+)/([a-zA-Z0-9-&.]+)$ /index.php?action=search-result&query=$2&row=$1
 RewriteRule ^maj-client/$ /index.php?action=add-update-customer
 RewriteRule ^change-list-size/$ /index.php?action=change-list-size
-
-## RewriteRule afficher-client-([0-9]+).html /index.php?action=view-customer&id=$1
 RewriteRule ^consulter-client/([a-zA-Z0-9-&.]+)-([0-9]+).html$ /index.php?action=view-customer&id=$2
 RewriteRule ^supprimer-client/([a-zA-Z0-9-&.]+)-([0-9]+).html$ /index.php?action=delete-customer&id=$2
 RewriteRule ^modifier-client/([a-zA-Z0-9-&.]+)-([0-9]+).html$ /index.php?action=update-customer&id=$2
