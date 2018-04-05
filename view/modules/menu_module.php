@@ -1,3 +1,5 @@
+<?php $row = unserialize(SEARCHROWS); ?>
+
 <div class="nav-bar bg-primary">
 
   <div class="container">
