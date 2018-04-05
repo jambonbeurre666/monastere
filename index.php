@@ -1,5 +1,40 @@
 <?php
-define('ROOTPATH', __DIR__);
+
+define("SEARCHROWS", serialize(array(
+    'raison-sociale' => array(
+        'value' => 'RaisonSociale',
+        'text' => 'Raison sociale'
+    ),
+    'telephone' => array(
+        'value' => 'Telephone',
+        'text' => 'Telephone'
+    ),
+    'email' => array(
+        'value' => 'MailClient',
+        'text' => 'Email'
+    ),
+    'domaine-d-activite' => array(
+        'value' => 'DomaineActivitée',
+        'text' => 'Domaine d\'activité'
+    ),
+    'code-postal' => array(
+        'value' => 'codePostClient',
+        'text' => 'Code postale'
+    ),
+    'ville' => array(
+        'value' =>  'villeClient',
+        'text' => 'Ville'
+    ),
+    'type' => array(
+        'value' => 'TypeClient',
+        'text' => 'Type'
+    ),
+    'nature' => array(
+        'value' =>  'Nature',
+        'text' => 'Nature'
+    )
+    )));
+
 session_start();
 require('controller/frontend.php');
 isLogged();
