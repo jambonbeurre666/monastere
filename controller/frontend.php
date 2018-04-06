@@ -3,12 +3,15 @@
 function isLogged()
 {
     if (isset($_GET['action'])) {
-        $authorize = array("loggin", "disconnect");
+        $authorize = array("login", "disconnect");
+
         if (!in_array($_GET['action'], $authorize)) {
             if (!isset($_SESSION['logged'])) {
                 header('location:/');
+                exit();
             } elseif ($_SESSION['logged'] !== true) {
                 header('location:/');
+                exit();
             }
         }
     }
@@ -115,31 +118,36 @@ function listClient($search)
     $scripts_footer = array('/public/js/select_pages.js','/public/js/modal_confirmation.js');
     require_once('dao/ClientManager.php');
     $clientManager = new ClientManager();
+
     if ($search) {
         require_once('dao/SearchManager.php');
         $searchmanager = new SearchManager();
-        $results = $searchmanager->search($localrow[$_GET['row']]['value'], $_GET['query']);
-    } else {
-        $page = intval($_GET['page']);
-        $offset = (isset($_SESSION['pages'])) ? $_SESSION['pages'] : 5;
-        $start = ($page - 1) * $offset ;
-        $results = $clientManager->getAllCustomersRange($start, $offset);
-        $rowcount = $clientManager->rowCount();
-        $pagestemp = floor($rowcount / $offset);
-        $nbrpages = ($rowcount - $pagestemp == 0) ? $pagestemp : $pagestemp + 1;
     }
-   
+    
+    $page = intval($_GET['page']);
+    $offset = (isset($_SESSION['pages'])) ? $_SESSION['pages'] : 5;
+    $start = ($page - 1) * $offset ;
+    $rowcount = ($search) ? $searchmanager->count($localrow[$_GET['row']]['value'], $_GET['query']) : $clientManager->rowCount();
+    $pagestemp = floor($rowcount / $offset);
+    $nbrpages = ($rowcount != 0) ? ($rowcount % $pagestemp == 0) ? $pagestemp : $pagestemp + 1 : 0;
+    $results =  ($search) ? $searchmanager->search($localrow[$_GET['row']]['value'], $_GET['query'], $start, $offset) : $clientManager->getAllCustomersRange($start, $offset);
+
+
     $title = "Liste des clients";
-   
+    $issearch = $search;
     $keyword =$clientManager->getKeyword()['keywords'];
     require('view/clients_list_view.php');
 }
 
 function changeListSize()
 {
-    echo 'coucou';
     $_SESSION['pages'] = $_POST['pages'];
-    header('location:/liste-clients/1/');
+    var_dump($_GET['page']);
+    if ($_GET['page'] === "search") {
+        header('location:/resultat-recherche/1/' . $_GET['row'] . '/' . $_GET['query']);
+    } else {
+        header('location:/liste-clients/1/');
+    }
 }
 
 function viewCustomer($update)
@@ -244,7 +252,7 @@ function deleteCustomer()
 
 function search()
 {
-    header('location:/resultat-recherche/' . $_POST['row'] . '/' . $_POST['search']);
+    header('location:/resultat-recherche/1/' . $_POST['row'] . '/' . $_POST['search']);
 }
 
 function generateRewritedUrl($id, $name)

@@ -1,4 +1,7 @@
 <?php
+
+    $urlform = ($search) ? '/change-list-size/recherche/' . $_GET['row'] . '/' . $_GET['query'] : '/change-list-size/' ;
+
     ob_start();
 ?>
 <div class="container">
@@ -8,22 +11,21 @@
         </div>
         <div class="container p-5">
             
-            <?php if (isset($offset) && $offset !== "") {
-    ?> 
+            <?php 
+            if (!$issearch) {
+                ?> 
             <h1 class="display-4">Liste des clients</h1>
             <?php
-} else {
-        ?>
+            } else {
+                ?>
                    <h1 class="display-4">Recherche <span class="text-primary">"<?= $_GET['query']; ?>"</span></h1>
             <p class="lead">dans "<?= $_GET['row']; ?>"</p>
             <?php
-    } ?>
+            } ?>
         </div>
     </div>
-    <?php if (isset($offset) && $offset !== "") {
-        ?>
     <div>
-        <form class="form-inline mb-4 pcf" method="post" action="/change-list-size/">
+        <form class="form-inline mb-4 pcf" method="post" action="<?= $urlform ?>">
 
             <label class="mr-sm-2" for="inlineFormCustomSelect">Nombre de clients par page</label>
             <select class="form-control mx-sm-3 pages" name="pages">
@@ -33,8 +35,7 @@
             </select>
         </form>
     </div>
-    <?php
-    } ?>
+
     <div class="table-responsive">
         <table class="table table-striped list-clients">
             <thead class="thead-dark">
@@ -53,7 +54,7 @@
                     foreach ($results as $result) {
                         $url = generateRewritedUrl($result['idClient'], $result['RaisonSociale']);
 
-                        if (isset($offset) && $offset !== "") {
+                        if (!$issearch) {
                             $rs = $result['RaisonSociale'];
                             $tel = $result['Telephone'];
                             $mail = $result['MailClient'];
@@ -86,7 +87,9 @@
             <?php
                 for ($i = 1; $i <= $nbrpages; $i++) {
                     $active = ($_GET['page'] == $i) ? 'active' : '';
-                    echo '<a href="/liste-clients/'.$i.'/" role="button" class="btn btn-outline-secondary '.$active.'">'.$i.'</a> ';
+
+               
+                    echo (!$issearch) ? '<a href="/liste-clients/'.$i.'/" role="button" class="btn btn-outline-secondary '.$active.'">'.$i.'</a> ' : '<a href="/resultat-recherche/'.$i.'/' . $_GET['row'] . '/' . $_GET['query'] .'" role="button" class="btn btn-outline-secondary '.$active.'">'.$i.'</a> ';
                 } ?>
         </div>
         <?php

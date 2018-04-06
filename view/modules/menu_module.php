@@ -1,4 +1,4 @@
-<?php $row = unserialize(SEARCHROWS); ?>
+<?php $row = unserialize(SEARCHROWS);?>
 
 <div class="nav-bar bg-primary">
 
@@ -22,6 +22,8 @@
           </li>
 
         </ul>
+
+
         <form action="/recherche/" method="post" class="form-inline my-2 my-lg-0">
           <input class="form-control mr-2" type="search" placeholder="Rechercher" aria-label="Search" name="search" value="<?= (isset($_GET['query']) && $_GET['query'] !== '') ? $_GET['query'] : ''; ?>">
           <select class="form-control mr-sm-2" name="row">

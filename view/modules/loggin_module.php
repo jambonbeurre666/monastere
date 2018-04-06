@@ -6,7 +6,7 @@
 <?php
 } else {
         ?>
-    <form action="connexion.html" method="post" class="form-inline">
+    <form action="/connexion/" method="post" class="form-inline">
 
   <div class="form-group mb-2">
     <label for="mail" class="sr-only">Email</label>

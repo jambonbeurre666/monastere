@@ -5,8 +5,9 @@ RewriteRule ^connexion/$ /index.php?action=login
 RewriteRule ^ajouter-client/$ /index.php?action=add-customer
 RewriteRule ^creer-client/$ /index.php?action=create-customer
 RewriteRule ^recherche/$ /index.php?action=search
-RewriteRule ^resultat-recherche/([a-zA-Z0-9-&.]+)/([a-zA-Z0-9-&.]+)$ /index.php?action=search-result&query=$2&row=$1
+RewriteRule ^resultat-recherche/([0-9]+)/([a-zA-Z0-9-&.]+)/([a-zA-Z0-9-&\s.]+)$ /index.php?action=search-result&page=$1&row=$2&query=$3
 RewriteRule ^maj-client/$ /index.php?action=add-update-customer
+RewriteRule ^change-list-size/recherche/([a-zA-Z0-9-&.]+)/([a-zA-Z0-9-&\s.]+)$ /index.php?action=change-list-size&page=search&row=$1&query=$2
 RewriteRule ^change-list-size/$ /index.php?action=change-list-size
 RewriteRule ^consulter-client/([a-zA-Z0-9-&.]+)-([0-9]+).html$ /index.php?action=view-customer&id=$2
 RewriteRule ^supprimer-client/([a-zA-Z0-9-&.]+)-([0-9]+).html$ /index.php?action=delete-customer&id=$2
